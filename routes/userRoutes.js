@@ -42,7 +42,7 @@ const userRoute = async (app) => {
             email: user.email,
             role: user.role
         }
-        jwt.sign(userDoc, process.env.SECRET_KEY, { expiresIn: "1 day" }, (err, token) => {
+        jwt.sign(userDoc, process.env.SECRET_KEY, {}, (err, token) => {
             if (err) {
                 return res.status(500).send({ message: "Internal Server error", error: err.message });
             }
