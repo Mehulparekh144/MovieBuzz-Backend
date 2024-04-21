@@ -52,16 +52,17 @@ const userRoute = async (app) => {
 
     app.get("/api/user", async (req, res) => {
         const { token } = req.cookies;
-        if (!token) {
-            return null;
+        if(token){
+            jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
+                if (err) {
+                    return null;
+                }
+                const { name, email, role, _id } = await User.findById(decoded.id);
+                return res.status(200).send({ name, email, role, _id });
+            });
+        } else{
+            return res.send(null);
         }
-        jwt.verify(token, process.env.SECRET_KEY, async (err, decoded) => {
-            if (err) {
-                return null;
-            }
-            const { name, email, role, _id } = await User.findById(decoded.id);
-            return res.status(200).send({ name, email, role, _id });
-        });
     })
 
     app.post("/api/logout", (req, res) => {
