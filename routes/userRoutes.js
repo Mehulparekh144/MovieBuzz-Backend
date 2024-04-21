@@ -46,6 +46,12 @@ const userRoute = async (app) => {
             if (err) {
                 return res.status(500).send({ message: "Internal Server error", error: err.message });
             }
+            const cookieOptions = {
+                httpOnly: true, 
+                secure: true, 
+                sameSite: "Strict", 
+                
+            };
             return res.cookie("token", token).send(userDoc);
         })
     })
