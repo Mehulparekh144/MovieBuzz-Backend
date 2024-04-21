@@ -52,7 +52,7 @@ const userRoute = async (app) => {
                 sameSite: "Strict", 
                 
             };
-            return res.cookie("token", token).send(userDoc);
+            return res.cookie("token", token , cookieOptions).send(userDoc);
         })
     })
 
@@ -144,7 +144,6 @@ const userRoute = async (app) => {
     app.post("/api/follow/:id", isAuthenticated, async (req, res) => {
         const { id } = req.params;
         const { _id } = req.user;
-
         try {
             const user = await User.findByIdAndUpdate(_id, { $push: { following: id } });
             const followingUser = await User.findByIdAndUpdate(id, { $push: { followers: _id } });

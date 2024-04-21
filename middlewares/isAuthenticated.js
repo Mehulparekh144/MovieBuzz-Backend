@@ -12,7 +12,7 @@ const isAuthenticated = (req,res,next) => {
             req.user = user;
             next();
         });
-    } else{
+    } else {
         return res.status(401).send("Unauthorized");
     }
 }
