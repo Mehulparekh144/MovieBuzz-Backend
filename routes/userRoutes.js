@@ -47,10 +47,10 @@ const userRoute = async (app) => {
                 return res.status(500).send({ message: "Internal Server error", error: err.message });
             }
             const cookieOptions = {
-                httpOnly: true, 
-                secure: true, 
-                sameSite: "Strict", 
-                
+                httpOnly: true,
+                secure: true,
+                maxAge: 10 * 60 * 60 * 1000,
+                sameSite: "None",
             };
             return res.cookie("token", token , cookieOptions).send(userDoc);
         })
